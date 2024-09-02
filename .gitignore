@@ -1,0 +1,7 @@
+.env
+fletenv
+*.pyc
+*.log
+__pycache__
+*.exe
+*.zip
