@@ -29,6 +29,9 @@ def main (page: ft.page):
     book_view = ft.ListView(expand=1, spacing=10, padding=20)
     wishlist_view = ft.ListView(expand=1, spacing=10, padding=20)
 
+    #def add_wishlist(e):
+
+
     def add_book(e):
         if not title_field.value:
             title_field.error_text = "Por favor ingrese un titulo"
@@ -42,7 +45,10 @@ def main (page: ft.page):
                 items=[
                     ft.PopupMenuItem(text="Eliminar",
                                        on_click=lambda _: book_view.controls.remove(new_book) or
-                                        page.update()), 
+                                        page.update()),
+                    ft.PopupMenuItem(text="Añadir a Lista Deseos",
+                                       on_click=lambda _: wishlist_view.controls.append(new_book) or
+                                        page.update()),  
                 ],
             ),
         )
