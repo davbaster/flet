@@ -1,5 +1,6 @@
 .env
 fletenv
+venv
 *.pyc
 *.log
 __pycache__
