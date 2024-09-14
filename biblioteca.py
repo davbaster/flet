@@ -29,6 +29,88 @@ def main (page: ft.page):
     book_view = ft.ListView(expand=1, spacing=10, padding=20)
     wishlist_view = ft.ListView(expand=1, spacing=10, padding=20)
 
+    #añadir libro a whishlist
+    def add_to_wishlist(new_book):
+        # Agregar el libro a la lista de deseos
+        wishlist_view.controls.append(new_book)
+        
+        # Buscar el PopupMenuButton de este libro
+        popup_menu = new_book.trailing
+        
+        # Quitar el item "Añadir a Lista" del PopupMenuButton si existe
+        popup_menu.items = [item for item in popup_menu.items if item.text != "Añadir a Lista"]
+        
+        # Actualizar la página para reflejar los cambios
+        page.update()
+
+
+    #añadir libro
+    def add_book(e):
+        if not title_field.value:
+            title_field.error_text = "Por favor ingrese un título"
+            page.update()
+            return
+        new_book = ft.ListTile(
+            title=ft.Text(title_field.value),
+            subtitle=ft.Text(author_field.value if author_field.value else "Autor Desconocido"),
+            trailing=ft.PopupMenuButton(
+                icon=ft.icons.MORE_VERT,
+                items=[
+                    ft.PopupMenuItem(text="Eliminar",
+                                     on_click=lambda _ : book_view.controls.remove(new_book) or page.update() ),
+                    ft.PopupMenuItem(text="Añadir a Lista",
+                                     on_click=lambda _ : wishlist_view.controls.append(new_book) or page.update() )
+                ],
+            ),
+        )
+        book_view.controls.append(new_book)
+        title_field.value = ""
+        author_field.value = ""
+        title_field.error_text = None
+        page.update()
+
+
+    #añadir libro a whishlist
+    def add_to_wishlist(new_book):
+        # Agregar el libro a la lista de deseos
+        wishlist_view.controls.append(new_book)
+        
+        # Buscar el PopupMenuButton de este libro
+        popup_menu = new_book.trailing
+        
+        # Quitar el item "Añadir a Lista" del PopupMenuButton si existe
+        popup_menu.items = [item for item in popup_menu.items if item.text != "Añadir a Lista"]
+        
+        # Actualizar la página para reflejar los cambios
+        page.update()
+
+
+    #añadir libro
+    def add_book(e):
+        if not title_field.value:
+            title_field.error_text = "Por favor ingrese un título"
+            page.update()
+            return
+        new_book = ft.ListTile(
+            title=ft.Text(title_field.value),
+            subtitle=ft.Text(author_field.value if author_field.value else "Autor Desconocido"),
+            trailing=ft.PopupMenuButton(
+                icon=ft.icons.MORE_VERT,
+                items=[
+                    ft.PopupMenuItem(text="Eliminar",
+                                     on_click=lambda _ : book_view.controls.remove(new_book) or page.update() ),
+                    ft.PopupMenuItem(text="Añadir a Lista",
+                                     on_click=lambda _ : wishlist_view.controls.append(new_book) or page.update() )
+                ],
+            ),
+        )
+        book_view.controls.append(new_book)
+        title_field.value = ""
+        author_field.value = ""
+        title_field.error_text = None
+        page.update()
+
+
     #def add_wishlist(e):
 
 
@@ -60,11 +142,13 @@ def main (page: ft.page):
 
     title_field = ft.TextField(label="Titulo del libro", width=300)
     author_field = ft.TextField(label="Autor", width=300)
+    add_button = ft.ElevatedButton("Añadir libro", on_click=add_book)
     add_button = ft.ElevatedButton("Añadir nuevo libro", on_click=add_book)
     add_book_view = ft.Column([
                                 ft.Text("Añadir nuevo libro", size=20, weight=ft.FontWeight.BOLD),
                                         title_field,
                                         author_field,
+                                        add_button,
                                         add_button,
                                         ], spacing=20
                              )
@@ -98,6 +182,6 @@ def main (page: ft.page):
     #columna donde se va a mostrar el bookview
     content = ft.Column([book_view], expand=True)
     
-    page.add(app_bar, ft.Row([rail, ft.VerticalDivider(width=1), content], expand=True))
+    page.add(app_bar, ft.Row([ft.Row([rail, content,ft.VerticalDivider(width=1)], expand=True), content],  expand=True))
 
 ft.app(target=main) 
