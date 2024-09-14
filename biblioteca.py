@@ -182,6 +182,6 @@ def main (page: ft.page):
     #columna donde se va a mostrar el bookview
     content = ft.Column([book_view], expand=True)
     
-    page.add(app_bar, ft.Row([ft.Row([rail, content], expand=True), ft.VerticalDivider(width=1), content], expand=True))
+    page.add(app_bar, ft.Row([ft.Row([rail, content,ft.VerticalDivider(width=1)], expand=True), content],  expand=True))
 
 ft.app(target=main) 
